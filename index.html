@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lista Exercicio 03 - 03</title>
+    <link href="css/estilo.css" rel="stylesheet" type="text/css" />
+    <style>
+        img {
+            margin: 8px;
+        }
+
+        .linha {
+            width: 220px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaCurta {
+            width: 340px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaCurtaMedia {
+            width: 480px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+
+        .linhaMedia {
+            width: 640px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaMediaLonga {
+            width: 740px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaLonga {
+            width: 840px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaLongaMaior {
+            width: 940px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaExtra {
+            width: 1080px;
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+
+        .linhaExtraMaior {
+            margin: auto;
+            padding: 4px;
+            text-align: center;
+            background-color: darkcyan;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="header">
+        <h1>Fundamentos de Web Design II - JavaScript</h1>
+    </div>
+    <div class="titulo">
+        <h2>Jogo da Memória</h2>
+    </div>
+    <div id="resposta"></div>
+
+    <script>
+        var elementoBoxes = "";
+        var cartasBaralho = new Array(27);
+
+        //montando o baralho
+        for (i = 0; i < cartasBaralho.length; i++) {
+            cartasBaralho[i] = "carta" + (i + 1) + ".png";
+        }
+
+        //dado
+        function gerarNumero(limInf, limSup) {
+            return parseInt(Math.random() * (limSup - limInf) + limInf + 0.5);
+        }
+
+        //sorteando as cartas
+        function sortearCartas(numero) {
+            var cartas = new Array(numero * 2);
+            for (i = 0; i < cartas.length; i++) {
+                indice = gerarNumero(0, cartasBaralho.length - 1);
+                cartas[i] = cartasBaralho.splice(indice, 1);
+                cartas[(i + 1)] = cartas[i];
+                i++;
+            }
+            embaralharCartas(cartas);
+        }
+
+        //embaralhar as cartas
+        function embaralharCartas(cartas) {
+            var cartasEmbaralhadas = new Array(cartas.length);
+            for (i = 0; i < cartasEmbaralhadas.length; i++) {
+                indice = gerarNumero(0, cartas.length - 1);
+                cartasEmbaralhadas[i] = cartas.splice(indice, 1);
+            }
+            mostrarCartas(cartasEmbaralhadas);
+        }
+
+
+        function mostrarCartas(cartas) {
+            if (cartas.length > 44) {
+                elementoBoxes += "<div class='linhaExtraMaior'>";
+            } else if (cartas.length > 37) {
+                elementoBoxes += "<div class='linhaExtra'>";
+            } else if (cartas.length > 33) {
+                elementoBoxes += "<div class='linhaLongaMaior'>";
+            } else if (cartas.length > 29) {
+                elementoBoxes += "<div class='linhaLonga'>";
+            } else if (cartas.length > 25) {
+                elementoBoxes += "<div class='linhaMediaLonga'>";
+            } else if (cartas.length > 16) {
+                elementoBoxes += "<div class='linhaMedia'>";
+            } else if (cartas.length > 7) {
+                elementoBoxes += "<div class='linhaCurtaMedia'>";
+            } else if (cartas.length > 4) {
+                elementoBoxes += "<div class='linhaCurta'>";
+            } else {
+                elementoBoxes += "<div class='linha'>";
+            }
+
+            for (i = 0; i < cartas.length; i++) {
+                elementoBoxes += "<img src='cartas/" + cartas[i] + "' width='80px' heigth='124px' alt='Carta Baralho'>";
+            }
+            elementoBoxes += "</div>";
+            document.getElementById("resposta").innerHTML = elementoBoxes;
+        }
+
+        var num = prompt("Informe quantas cartas irá jogar: ");
+        if (num != null && !isNaN(num)) {
+            if (num > 1 && num < 28) {
+                sortearCartas(num);
+            } else {
+                alert("O número deve ser maior que 1 e menos que 28.");
+            }
+        } else {
+            alert("O número deve ser maior que 1 e menos que 28.");
+        }
+    </script>
+</body>
+</html>
